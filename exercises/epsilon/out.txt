@@ -13,3 +13,26 @@ INT_MIN = -2147483648
  my min int = -2147483648
 
  my min int = -2147483648
+
+DBL_EPSILON =2.22045e-16
+
+my dbl eps=  2.22045e-16
+
+FLT_EPSILON = 1.19209e-07
+
+my flt eps = 1.19209e-07
+
+LDBL_EPSILON = 1.0842e-19
+
+my ldbl eps = 1.0842e-19
+
+ my dbl eps = 2.22045e-16
+
+ my flt eps = 1.19209e-07
+
+ my lsbl eps = 1.0842e-19
+sum_up_float =15.403683
+sum_down_float=18.807919
+sum_up_double =20.966166
+sum_down_double = 20.966166
+a = 1, b = 2, tau = 1, eps = 2 leads to 1
