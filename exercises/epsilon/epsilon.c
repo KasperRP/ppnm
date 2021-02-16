@@ -63,7 +63,9 @@ int main() {
 	}	
 	printf("sum_up_float =%f\n",sum_up_float);
 	printf("sum_down_float=%f\n",sum_down_float);
-	
+	printf("We get a difference because 1/INT_MAX ~10^-9 is smaller than float eps ~10^-7. \n");
+       printf("it makes sense that up_float is smallest because here we add small numbers to large ones \n");
+	printf("and the small ones will be insignificant when we are below flt eps\n");	
 	double sum_up_double = 0;
 	double sum_down_double =0;
 	for(n=1; n<max+1; n++){
@@ -72,7 +74,8 @@ int main() {
 		sum_down_double+=1.0/n;}
 	printf("sum_up_double =%f\n",sum_up_double);
 	printf("sum_down_double = %f\n", sum_down_double);
-
+	printf("Here we have agreement because the dbl eps is smaller than 1/INT_MAX\n");
+	
 	return 0;
 	}
 

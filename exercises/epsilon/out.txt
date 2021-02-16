@@ -33,6 +33,10 @@ my ldbl eps = 1.0842e-19
  my lsbl eps = 1.0842e-19
 sum_up_float =15.403683
 sum_down_float=18.807919
+We get a difference because 1/INT_MAX ~10^-9 is smaller than float eps ~10^-7. 
+it makes sense that up_float is smallest because here we add small numbers to large ones 
+and the small ones will be insignificant when we are below flt eps
 sum_up_double =20.966166
 sum_down_double = 20.966166
+Here we have agreement because the dbl eps is smaller than 1/INT_MAX
 a = 1, b = 2, tau = 1, eps = 2 leads to 1
