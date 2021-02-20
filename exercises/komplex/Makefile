@@ -1,13 +1,16 @@
 CC = gcc
-CFLAGS = -std=gnu11 -O -Wall
+CFLAGS = -Wall -std=gnu99
 LDLIBS = -lm
 
-out.txt: komplex
-	./$< > $@
+.PHONEY: all clean
 
-komplex: komplex.o
-	$(CC) $(LDFLAGS) -o komplex komplex.o $(LDLIBS)
+all: out.txt ; cat $<
 
-komplex.o: komplex.c
-	$(CC) $(CFLAGS) -c komplex.c
+out.txt: main ; ./$< > $@
+
+main: main.o komplex.o
+
+main.o komplex.o: komplex.h
+
+clean: ; $(RM) main main.o komplex.o out.txt
 
