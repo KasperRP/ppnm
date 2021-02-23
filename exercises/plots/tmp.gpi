@@ -1,0 +1,13 @@
+\
+set terminal png;\
+set output "gam.pyxplot.png";\
+set tics out;\
+set xlabel "x";\
+set ylabel "y";\
+set title "Gamma function";\
+plot \
+"data.txt" using 1:5 with line title "tgamma from math.h"\
+,"data.txt" using 1:6 with line title "gsl-sf-gamma"\
+,"data.txt" using 1:7 with line title "mygam"\
+,"gam-tabulated.data.txt" using 1:2 with points title "gam-tabulated data"\
+

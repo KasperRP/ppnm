@@ -1,0 +1,13 @@
+
+                        _       _      PYXPLOT
+ _ __  _   ___  ___ __ | | ___ | |_    Version 0.9.2
+| '_ \| | | \ \/ / '_ \| |/ _ \| __|   19/09/2012
+| |_) | |_| |>  <| |_) | | (_) | |_
+| .__/ \__, /_/\_\ .__/|_|\___/ \__|   Copyright (C) 2006-2012 Dominic Ford
+|_|    |___/     |_|                                 2008-2012 Ross Church
+
+For documentation and more information, see <http://www.pyxplot.org.uk>.
+
+pyxplot> (a=3)+(b=2)
+5
+pyxplot> j^Z
