@@ -8,7 +8,7 @@ double f(double t, void* params){
 	besselpar par = *(besselpar*) params; // inspired by params.c in lecture 7-passf
 	double x = (*par).x;
 	int n = (*par).n;
-	f=1/M_PI*cos(n*t-x*sin(t));
+	double f=1/M_PI*cos(n*t-x*sin(t));
 	return f;
 }
 
@@ -17,7 +17,7 @@ double bessel(double x, int n) {
 	F.function = &f;
 	F.params = &par;
 	int limit = 999;
-	gsl_integration_workspace* w;
+	gsl_integration_workspace *w;
 	w = gsl_integration_workspace_alloc(limit);
 	double a = 0, b = M_PI, acc = 1e-6, eps = 1e-6, result, error;
 	gsl_integration_qag(&F,a,b,acc,eps,limit,w,&result,&error);
@@ -26,6 +26,10 @@ double bessel(double x, int n) {
 }
 
 int main() {
+	double x;
 	double xmin = -2, xmax = 2;
-	for(x=xmin;x<=xmax;<+=1.0/8);
+	for(x=xmin;x<=xmax;x+=1.0/8)
+		printf("%10g %10g %10g %10g\n",x,bessel(x,0),bessel(x,1),bessel(x,2));
+return 0;
+}
 
