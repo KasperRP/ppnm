@@ -6,7 +6,7 @@ LDLIBS = $(shell gsl-config --libs)
 .PHONEY: default
 default: linplot.png  #linterp.txt
 
-linplot.png: linplot.pgi xy_points.txt linterp.txt
+linplot.png: linplot.pgi xy_points.txt linterp.txt 
 	pyxplot $<
 
 linterp.txt: linterp

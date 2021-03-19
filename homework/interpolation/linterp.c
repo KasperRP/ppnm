@@ -3,17 +3,12 @@
 #include<gsl/gsl_vector.h>
 #include"binsearch.h"
 #include<math.h>
+#include<gsl/gsl_interp.h>
+#include<gsl/gsl_spline.h>
 
-// For printing results in the main function we define (see GSL Matrix exercise)
-
-//void vector_print(char s[], gsl_vector* v) {
-//printf("%s\n",s);
-//for(int i=0; i < v -> size; i++) printf("%10g", gsl_vector_get(v,i));
-//printf("\n");
-//}
 
 // Linear spline interpolation function
-double linterp(gsl_vector* x, gsl_vector* y, double z){
+double linterp(gsl_vector* x, gsl_vector* y, double z){    // z is an x-value
 
 int i = binsearch(x,z);
 double slope = (gsl_vector_get(y,i+1)-gsl_vector_get(y,i))/(gsl_vector_get(x,i+1)-gsl_vector_get(x,i));
@@ -32,12 +27,17 @@ double area=0;
 for(int i=0; i<j; i++){
 	double slope= (gsl_vector_get(y,i+1)-gsl_vector_get(y,i))/(gsl_vector_get(x,i+1)-gsl_vector_get(x,i));
 	area += linfunc_integ(gsl_vector_get(x,i), gsl_vector_get(x,i+1), gsl_vector_get(y,i), slope);
-return area;
 }
 double slope_final= (gsl_vector_get(y,j+1)-gsl_vector_get(y,j))/(gsl_vector_get(x,j+1)-gsl_vector_get(x,j));
 area += linfunc_integ(gsl_vector_get(x,j),z,gsl_vector_get(y,j),slope_final);
 return area;
 }
+
+
+// GSL-functions for comparison
+
+
+
 
 
 
@@ -64,7 +64,7 @@ FILE* linterp_file = fopen("linterp.txt","w");
 int z=0;
 double fine = 0.5;
 while(z*fine<=gsl_vector_get(x,N-1)){
-	fprintf(linterp_file, "%10g %10g\n",z*fine, linterp(x,y,z*fine));
+	fprintf(linterp_file, "%10g %10g %10g\n",z*fine, linterp(x,y,z*fine), linterp_integ(x,y,z*fine));
 	z++;
 
 }
