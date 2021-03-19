@@ -1,0 +1,8 @@
+set term png
+set width 12
+set xlabel "$x$"
+set ylabel "$y$"
+set title "Linear interpolation"
+set output "linplot.png"
+plot "xy_points.txt" using 1:2 with points pointtype 2 title "Tabulated data" \
+, "linterp.txt" using 1:2 with line title "my linear interpolation"
