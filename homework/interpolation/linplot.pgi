@@ -5,5 +5,7 @@ set ylabel "$y$"
 set title "Linear interpolation"
 set output "linplot.png"
 plot "xy_points.txt" using 1:2 with points pointtype 2 title "Tabulated data" \
-, "linterp.txt" using 1:2 with line title "my linear interpolation" \
-, "linterp.txt" using 1:3 with line title "my integral function"
+, "linterp.txt" using 1:2 with line linetype 1 color black title "my linear interpolation" \
+, "linterp.txt" using 1:3 with line title "my integral function"\
+, "linterp.txt" using 1:4 with line linetype 3 color yellow title "GSL" \
+, "linterp.txt" using 1:5 with points pointtype 3 title "GSL"
