@@ -34,12 +34,6 @@ return area;
 }
 
 
-// GSL-functions for comparison
-
-
-
-
-
 
 int main() {
 // First the points to interpolate
@@ -56,10 +50,7 @@ for(int i=0; i<=N-1; i++){
 }
 
 
-
 // Then the interpolation function
-
-
 FILE* linterp_file = fopen("linterp.txt","w");
 int z=0;
 double fine = 0.5;

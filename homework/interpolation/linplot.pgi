@@ -1,5 +1,5 @@
 set term png
-set width 12
+set width 8
 set xlabel "$x$"
 set ylabel "$y$"
 set title "Linear interpolation"
