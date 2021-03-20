@@ -4,17 +4,7 @@
 #include<math.h>
 #include<gsl/gsl_interp.h>
 #include<gsl/gsl_spline.h>
-
-int binsearch(gsl_vector* x, double z){    // Problems with binsearch.h so I will just write it here
-	int N = x -> size;
-	int i=0, j=N-1;
-	while(j-i>1){
-		int mid = (i+j)/2;
-		if(z > gsl_vector_get(x,mid)) i=mid;
-		else j=mid;
-	}
-	return i;
-}
+#include"binsearch.h"
 
 typedef struct {gsl_vector* x, *y, *b, *c;} qinterp; // structure with relevant parameters
 

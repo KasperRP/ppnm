@@ -24,9 +24,11 @@ linterp.c: binsearch.h  binsearch.c
 qinterp.txt: qinterp
 	./$< > $@
 
-qinterp: qinterp.o 
+qinterp: qinterp.o binsearch.o  
 
 qinterp.o: qinterp.c
+
+qinterp.c: binsearch.h binsearch.c 
 
 
 
