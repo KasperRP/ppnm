@@ -4,9 +4,12 @@ CFLAGS += $(shell gsl-config --cflags)
 LDLIBS = $(shell gsl-config --libs)
 
 .PHONEY: default
-default: linplot.png  #linterp.txt
+default: linplot.png  qplot.png #qinterp.txt          #linterp.txt 
 
 linplot.png: linplot.pgi xy_points.txt linterp.txt 
+	pyxplot $<
+
+qplot.png: qplot.pgi xy_points.txt qinterp.txt
 	pyxplot $<
 
 linterp.txt: linterp
@@ -17,5 +20,13 @@ linterp: linterp.o binsearch.o
 linterp.o: linterp.c
 
 linterp.c: binsearch.h  binsearch.c
+
+qinterp.txt: qinterp
+	./$< > $@
+
+qinterp: qinterp.o 
+
+qinterp.o: qinterp.c
+
 
 
