@@ -64,7 +64,7 @@ gsl_interp_init(linear, xa, ya, N);
 // Then the interpolation function
 FILE* linterp_file = fopen("linterp.txt","w");
 int z=0;
-double fine = 0.5;
+double fine = 0.1;
 while(z*fine<=gsl_vector_get(x,N-1)){
 	double interp_l_gsl=gsl_interp_eval(linear , xa, ya, z*fine,NULL); // GSL lin. interp.
 	double interp_integ_gsl=gsl_interp_eval_integ(linear, xa, ya, xa[0], z*fine, NULL); //GSL integral

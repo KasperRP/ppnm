@@ -1,0 +1,13 @@
+set term png
+set width 8
+set xlabel "$x$"
+set ylabel "$y$"
+set title "Cubic interpolation"
+set output "cplot.png"
+plot "xy_points.txt" using 1:2 with points pointtype 2 title "Tabulated data" \
+, "cinterp.txt" using 1:2 with line linetype 1 color black title "my linear interpolation"\
+, "cinterp.txt" using 1:3 with line title "my derivative function"\
+, "cinterp.txt" using 1:4 with line title "my integral function"\
+, "cinterp.txt" using 1:5 with line linetype 3 color yellow title "GSL cubic interpolation"\
+, "cinterp.txt" using 1:6 with points pointtype 3 title "GSL"\
+, "cinterp.txt" using 1:7 with points pointtype 3 title "GSL"

@@ -2,8 +2,6 @@
 #include<assert.h>
 #include<gsl/gsl_vector.h>
 #include<math.h>
-#include<gsl/gsl_interp.h>
-#include<gsl/gsl_spline.h>
 #include"binsearch.h"
 
 typedef struct {gsl_vector* x, *y, *b, *c;} qinterp; // structure with relevant parameters
