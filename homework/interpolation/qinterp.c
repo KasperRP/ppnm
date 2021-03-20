@@ -134,7 +134,7 @@ qinterp* qinterp_alloc(gsl_vector* x,gsl_vector* y){
 
 	FILE* qinterp_file = fopen("qinterp.txt", "w");
 	int z=0;
-	double fine = 0.5;
+	double fine = 0.1;
 	while(z*fine<=gsl_vector_get(x,N-1)){
 		fprintf(qinterp_file, "%10g %10g %10g %10g\n", z*fine, qinterp_eval(s, z*fine), qinterp_der(s, z*fine), qinterp_integ(s,z*fine));
 		z++;
