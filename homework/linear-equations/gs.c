@@ -60,3 +60,18 @@ void GS_solve(gsl_matrix* Q, gsl_matrix* R, gsl_vector* b, gsl_vector* x){
 gsl_blas_dgemv(CblasTrans, 1, Q, b, 0, x); // Calculates Q^T*b, contains the result in x
 backsub(R,x); // solves R*x= Q^T*b (initially x=Q^T*b, but replaced by the solution x after running)
 }
+
+
+void GS_inverse(gsl_matrix* Q, gsl_matrix* R, gsl_matrix* X){
+// Finding inverse of A=QR by solving QR*xi=ei. Inverse is stored in X
+int n=Q -> size2;
+gsl_vector* ei = gsl_vector_alloc(n);
+for(int i=0; i<n; i++){
+	gsl_vector_set_basis(ei,i); //Making ei the i'th unit vector
+	gsl_vector_view xi_view = gsl_matrix_column(X,i);
+	gsl_vector* xi = &xi_view.vector;
+	GS_solve(Q, R, ei, xi); //Solves QR*xi=ei. Result ends in X because xi is defined as column of X
+}
+	gsl_vector_free(ei);
+	}
+

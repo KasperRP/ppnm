@@ -3,7 +3,7 @@ CFLAGS += $(shell gsl-config --cflags)
 LDLIBS = $(shell gsl-config --libs)
 
 .PHONEY: default
-default: GS_decomp_test.txt GS_solve_test.txt
+default: GS_decomp_test.txt GS_solve_test.txt GS_inverse_test.txt
 
 GS_decomp_test.txt: main
 	./$< > $@
@@ -11,6 +11,8 @@ GS_decomp_test.txt: main
 GS_solve_test.txt: main
 	./$< > $@
 
+GS_inverse_test.txt: main
+	./$< > $@
 
 main: main.o gs.o
 
