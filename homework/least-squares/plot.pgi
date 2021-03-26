@@ -1,0 +1,10 @@
+set term png
+set width 8
+set xlabel "$Time\: in\: Days$"
+set ylabel "$\log (Per-cent\: Activity)$"
+set title "Ordinary Least-Squares"
+set output "plot.png"
+plot "data.txt" using 1:2:3 with yerrorbars title "Data with errors"\
+, "fit.txt" using 1:2 with line linetype 1 color black title "Linear fit"\
+, "fit.txt" using 1:3 with line linetype 2 color red title "Lower bound"\
+, "fit.txt" using 1:4 with line linetype 2 color red title "Upper bound"

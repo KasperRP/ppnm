@@ -1,0 +1,4 @@
+The coefficients in my linear model are found to be c(0)=4.95867 and c(1)=-0.171379 with uncertainties dc(0)=0.0298375 and dc(1)=0.00353553.
+From this I find the decay rate to be k=-c(1)=0.171379 per day with uncertaintity err_k=0.00353553 per day.
+The estimated half-lifetime is then T=log(2)/k=4.04452 days with uncertainty (using error propagation law) log(2)/k^2*err_k=0.0834378 days.
+The modern value of the half-lifetime of Ra-224 is 3.632 days according to Wikipedia, so even my lowest possible value is above the modern one.
