@@ -3,6 +3,9 @@
 #include<gsl/gsl_vector.h>
 #include<gsl/gsl_matrix.h>
 #include<gsl/gsl_blas.h>
+#include<gsl/gsl_linalg.h>
+#include<time.h>
+
 
 // Calling functions from gs.c
 
@@ -160,8 +163,40 @@ int main(){
 
 		
 
-	
+	// For time measurements
+	FILE* QR_time = fopen("QR_time.txt", "w");
+	// Generating random matrix with variable size
+	for(int N=200; N<=400; N+=10){
+		gsl_matrix* At = gsl_matrix_alloc(N,N);
+		gsl_matrix* Rt = gsl_matrix_alloc(N,N);
+		gsl_vector* tau = gsl_vector_alloc(N);
+		for(int i=0; i<N; i++){
+			for(int j=0; j<N; j++){
+				double Atij = (double) rand()/RAND_MAX*10;
+				gsl_matrix_set(At,i,j,Atij);
+			}
+		}
+		clock_t my_start = clock(); // Total processor time until now
+		GS_decomp(At, Rt);
+		clock_t my_stop = clock(); 
+		double my_time = ((double) my_stop-my_start)/CLOCKS_PER_SEC; // processor clock time divided by number of processor clocks per second = total time in seconds
 
+		// Same procedure for gsl_linalg_QR_decomp
+
+		clock_t gsl_start = clock();
+		gsl_linalg_QR_decomp(At, tau);
+		clock_t gsl_stop = clock();
+		double gsl_time = ((double) gsl_stop-gsl_start)/CLOCKS_PER_SEC;
+
+		fprintf(QR_time, "%i %g %g\n", N, my_time, gsl_time);
+		
+		gsl_matrix_free(At);
+		gsl_matrix_free(Rt);
+		gsl_vector_free(tau);
+	}
+			
+
+	
 
 
 
@@ -192,7 +227,7 @@ int main(){
 	fclose(GS_inverse_file);
 
 
-
+	fclose(QR_time);
 
 	return 0;
 }
