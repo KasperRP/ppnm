@@ -1,0 +1,9 @@
+set term png
+set width 8
+set xlabel "$x$"
+set ylabel "$\psi$"
+set title "Quantum particle in a box"
+set output "quantum_plot.png"
+
+plot "quantum_eigfunc.txt" using 1:2 with points pointtype 15 color black title "Exact"\
+, "quantum_eigfunc.txt" using 1:3 with line linetype 1 color red title "My calculation"

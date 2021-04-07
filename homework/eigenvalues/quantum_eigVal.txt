@@ -1,0 +1,6 @@
+n=1 calculated=9.85121 exact=9.8696
+n=2 calculated=39.1848 exact=39.4784
+n=3 calculated=87.3455 exact=88.8264
+n=4 calculated=153.257 exact=157.914
+n=5 calculated=235.448 exact=246.74
+n=6 calculated=332.082 exact=355.306
