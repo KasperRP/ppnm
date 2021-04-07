@@ -23,7 +23,7 @@ void matrix_print(gsl_matrix* A, FILE* list){
 	for(int i=0; i<m; i++){
 		for(int j=0; j<n; j++){
 			double Aij = gsl_matrix_get(A,i,j);
-			fprintf(list,"%.3g  ", Aij);
+			fprintf(list,"%.2f  ", Aij);
 		}
 		fprintf(list, "\n");
 	}
@@ -33,7 +33,7 @@ void vector_print(gsl_vector* b, FILE* list){
 	int n = b -> size;
 	for(int i=0; i<n; i++){
 		double bi = gsl_vector_get(b,i);
-		fprintf(list,"%.3g\n", bi);
+		fprintf(list,"%.2f\n", bi);
 	}
 }
 
