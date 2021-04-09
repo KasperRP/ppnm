@@ -3,8 +3,12 @@
 #include<gsl/gsl_vector.h>
 #include<gsl/gsl_matrix.h>
 #include<gsl/gsl_blas.h>
+#include<gsl/gsl_eigen.h>
+#include<time.h>
 
 void jacobi_diag(gsl_matrix* A, gsl_matrix* V);
+
+void jacobi_diag_opt(gsl_matrix* A, gsl_matrix* V);
 
 void matrix_print(gsl_matrix* A, FILE* list){
 	int m = A -> size1;
@@ -115,7 +119,46 @@ int main(){
 
 
 
-	
+	// For time measurements
+	FILE* diag_time_file = fopen("diag_time.txt", "w");
+	// Generating random  symmetric matrix with variable size
+	for(int n=20; n<=200; n+=20){
+		gsl_matrix* At = gsl_matrix_alloc(n,n);
+		gsl_matrix* Vt = gsl_matrix_alloc(n,n);
+
+		gsl_vector* gsl_eig = gsl_vector_alloc(n);
+		gsl_eigen_symmv_workspace* w = gsl_eigen_symmv_alloc(n);
+
+		for(int i=0; i<n; i++){
+			for(int j=i; j<n; j++){
+				double Atij = (double) rand()/RAND_MAX*10;
+				gsl_matrix_set(At,i,j,Atij);
+				gsl_matrix_set(At,j,i,Atij);
+			}
+		}
+		clock_t my_start = clock();
+		jacobi_diag(At,Vt);
+		clock_t my_stop = clock();
+		double my_time = ((double) my_stop-my_start)/CLOCKS_PER_SEC;
+
+		clock_t gsl_start = clock();
+		gsl_eigen_symmv(At, gsl_eig, Vt, w);
+		clock_t gsl_stop = clock();
+		double gsl_time = ((double) gsl_stop-gsl_start)/CLOCKS_PER_SEC;
+
+		clock_t my_start_opt = clock();
+		jacobi_diag_opt(At,Vt);
+		clock_t my_stop_opt = clock();
+		double my_time_opt=((double) my_stop_opt-my_start_opt)/CLOCKS_PER_SEC;
+				
+		fprintf(diag_time_file, "%i %g %g %g\n", n, my_time, gsl_time, my_time_opt);
+
+		gsl_matrix_free(At);
+		gsl_matrix_free(Vt);
+		gsl_vector_free(gsl_eig);
+		gsl_eigen_symmv_free(w);
+	}
+
 
 
 
@@ -134,6 +177,8 @@ int main(){
 	fclose(jacobi_diag_file);
 	fclose(quantum_eigVal_file);
 	fclose(quantum_eigfunc_file);
+
+	fclose(diag_time_file);
 	return 0;
 }
 

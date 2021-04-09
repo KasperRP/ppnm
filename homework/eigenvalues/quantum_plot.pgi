@@ -4,6 +4,7 @@ set xlabel "$x$"
 set ylabel "$\psi$"
 set title "Quantum particle in a box"
 set key bottom left
+set yrange [-1.5:1.5]
 set output "quantum_plot.png"
 
 plot "quantum_eigfunc.txt" using 1:2 with points pointtype 15 color black title "Exact"\
