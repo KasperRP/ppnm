@@ -1,0 +1,9 @@
+set term png
+set width 8
+set xlabel "x"
+set ylabel "y"
+set title "Stable three-body problem"
+set output "GRAV.png"
+plot "GRAV.txt" using 2:3 with line linetype 5 color red title "Mass 1"\
+, "GRAV.txt" using 4:5 with line linetype 5 color green title "Mass 2"\
+, "GRAV.txt" using 6:7 with line linetype 5 color blue title "Mass 3"
