@@ -1,0 +1,9 @@
+set term png
+set width 8
+set xlabel "time"
+set ylabel "solutions"
+set title "SIR model $T_c$=1.5"
+set output "SIR3.png"
+plot "SIR3.txt" using 1:2 with line linetype 5 color red title "Susceptible"\
+, "SIR3.txt" using 1:3 with line linetype 5 color green title "Infectious"\
+, "SIR3.txt" using 1:4 with line linetype 5 color blue title "Removed"

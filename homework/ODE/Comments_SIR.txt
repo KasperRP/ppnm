@@ -1,0 +1,3 @@
+An increasing contact time $T_c$ gives rise to the solutions being
+shifted along the time axis.
+Also, the maximum infectious number decreases for increasing $T_c$, which makes sense.
