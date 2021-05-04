@@ -1,0 +1,8 @@
+set term png
+set width 8
+set xlabel "Number of sampled points N"
+set ylabel "Error"
+set title "Error scaling based on $\int_0^{2\pi} dx \int_0^{2\pi}dy\, cos^2(x)sin^2(y)$ "
+set output "err.png"
+plot "err.txt" using 1:2 with line color red title "plainMC" \
+, "err.txt" using 1:3 with line color blue title "quasiMC"

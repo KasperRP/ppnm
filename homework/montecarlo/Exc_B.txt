@@ -1,0 +1,11 @@
+Testing the quasi-random Monte Carlo routine on same functions as in A:
+
+Integral of exp(x*y)*sin(pi*z) from [0,0,0] to [1,1,1] = 0.838987
+Analytical result = 0.839003
+Error = 2.69421e-05
+Number of sampled points = 1000000
+
+Integral of cos(x)^2*sin(y)^2 from [0,0] to [2pi, 2pi] = 9.87053
+Analytical result = pi^2
+Error = 0.00194102
+Number of sampled points = 1000000
