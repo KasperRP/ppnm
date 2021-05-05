@@ -5,7 +5,7 @@ LDLIBS += $(shell gsl-config --libs)
 
 .PHONEY: default
 default: out.txt
-	cat $<
+
 
 out.txt: main
 	./$< > $@
