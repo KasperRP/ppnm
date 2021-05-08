@@ -6,7 +6,7 @@ Error = 0.000465941
 Number of sampled points = 1000000
 
 Integral of cos(x)^2*sin(y)^2 from [0,0] to [2pi, 2pi] = 9.87226
-Analytical result = pi^2
+Analytical result = pi^2 = 9.869604401
 Error = 0.0110349
 Number of sampled points = 1000000
 

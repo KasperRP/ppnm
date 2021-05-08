@@ -1,0 +1,11 @@
+Testing the recursive stratified sampling routine on different functions:
+
+Integral of exp(x*y)*sin8pi*z) from [0,0,0] to [1,1,1] = 0.840642
+Analytical result = 0.839003
+acc = 0.001
+ eps = 0
+
+Integral of cos(x)^2*sin(y)^2 from [0,0] to [2pi,2pi] = 9.85267
+Analytical result = pi^2 = 9.869604401
+acc = 0.001
+ eps = 0

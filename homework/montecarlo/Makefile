@@ -3,13 +3,16 @@ CFLAGS += $(shell gsl-config --cflags)
 LDLIBS = $(shell gsl-config --libs)
 
 .PHONEY: default
-default: Exc_A.txt Exc_B.txt err.png #err.txt
+default: Exc_A.txt Exc_B.txt err.png Exc_C.txt
 	
 
 Exc_A.txt: main
 	./$< > $@
 
 Exc_B.txt: main
+	./$< > $@
+
+Exc_C.txt: main
 	./$< > $@
 
 err.png: err.pgi err.txt

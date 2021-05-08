@@ -106,6 +106,68 @@ void quasimc(
 }
        		       
 
+// Part C: recursive stratified sampling (see notes)
+
+double strata(
+	int dim, double f(int dim, double* x),
+	double* a, double* b,
+	double acc, double eps,
+	int n_reuse, double mean_reuse)
+{
+
+int N = 16*dim;
+double V = 1;
+for(int i=0; i<dim; i++) V*=b[i]-a[i];
+int nl[dim], nr[dim];
+double x[dim];
+double meanl[dim], meanr[dim];
+double mean=0;
+
+for(int i=0; i<dim; i++){
+	meanl[i]=0;
+	meanr[i]=0;
+	nl[i]=0;
+	nr[i]=0; }
+
+for(int i=0; i<N; i++){
+	for(int j=0; j<dim; j++) x[j]=a[j]+RANDOM*(b[j]-a[j]);
+	double fx = f(dim,x);
+	mean+=fx;
+
+for(int j=0; j<dim; j++){
+	if(x[j]>(a[j]+b[j])/2) { nr[j]++; meanr[j]+=fx; }
+	else { nl[j]++; meanl[j]+=fx; }
+}
+}
+mean /= N;
+for(int i=0; i<dim; i++){
+	meanl[i] /= nl[i];
+	meanr[i] /= nr[i];
+}
+
+int idiv=0;
+double maxvar=0;
+for(int i=0; i<dim; i++){
+	double var = fabs(meanr[i]-meanl[i]);
+	if(var > maxvar){ maxvar=var; idiv=i; }
+}
+
+double integ = (mean*N+mean_reuse*n_reuse)/(N+n_reuse)*V;
+double error = fabs(mean_reuse-mean)*V;
+double tolerance = acc+eps*fabs(integ);
+if(error < tolerance) return integ;
+
+double a2[dim];
+double b2[dim];
+for(int i=0; i<dim; i++) a2[i]=a[i];
+for(int i=0; i<dim; i++) b2[i]=b[i];
+a2[idiv] = (a[idiv]+b[idiv])/2;
+b2[idiv] = (a[idiv]+b[idiv])/2;
+
+double integl = strata(dim, f, a, b2, acc/sqrt(2), eps, nl[idiv], meanl[idiv]);
+double integr = strata(dim, f, a2, b, acc/sqrt(2), eps, nr[idiv], meanr[idiv]);
+return integl+integr;
+}
 
 
 

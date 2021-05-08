@@ -7,6 +7,11 @@ void plainmc( int dim, double* a, double* b, double f(int dim, double* x), int N
 
 void quasimc( int dim, double* a, double* b, double f(int dim, double* x), int N, double* result, double* error);
 
+double strata( int dim,
+	double f(int dim, double* x), double* a, double* b, 
+	double acc, double eps, 
+	int nreuse, double mreuse);
+
 // Interesting functions
 
 double func1(int dim, double* r){
@@ -71,7 +76,7 @@ int main(){
 
 	plainmc(dim, a, b, func2, N, &result, &error);
 	fprintf(Exc_A, "\nIntegral of cos(x)^2*sin(y)^2 from [0,0] to [2pi, 2pi] = %g\n", result);
-	fprintf(Exc_A, "Analytical result = pi^2\n");
+	fprintf(Exc_A, "Analytical result = pi^2 = 9.869604401\n");
 	fprintf(Exc_A,"Error = %g\nNumber of sampled points = %i\n", error, N);
 	}
 
@@ -132,7 +137,7 @@ int main(){
 
 	quasimc(dim, a, b, func2, N, &result, &error);
 	fprintf(Exc_B, "\nIntegral of cos(x)^2*sin(y)^2 from [0,0] to [2pi, 2pi] = %g\n", result);
-	fprintf(Exc_B, "Analytical result = pi^2\n");
+	fprintf(Exc_B, "Analytical result = pi^2=9.869604401\n");
 	fprintf(Exc_B, "Error = %g\nNumber of sampled points = %i\n", error, N);
 	}
 	
@@ -158,9 +163,44 @@ int main(){
 	}
 
 	}
+
+	// Testing recursive stratified sampling (Exc. C):
+	FILE* Exc_C = fopen("Exc_C.txt", "w");
+	fprintf(Exc_C, "Testing the recursive stratified sampling routine on different functions:\n");
+	double acc = 1e-3;
+	double eps =0;
+	{  // Integral of func1 
+	int dim=3;
+	double a[dim];
+	double b[dim];
+	for( int i=0; i<dim; i++){
+		a[i]=0;
+		b[i]=1;
+	}
+	double integ = strata(dim, func1, a, b, acc, eps, 0, 0);
+	fprintf(Exc_C, "\nIntegral of exp(x*y)*sin8pi*z) from [0,0,0] to [1,1,1] = %g\n", integ);
+	fprintf(Exc_C, "Analytical result = 0.839003\n");
+	fprintf(Exc_C, "acc = %g\n eps = %g\n", acc, eps);
+	}
+	
+	{ // Integral of func2
+	int dim =2;
+	double a[dim];
+	double b[dim];
+	for(int i=0; i<dim; i++){
+		a[i]=0;
+		b[i]=2*M_PI;
+	}
+	double integ = strata(dim, func2, a, b, acc, eps, 0, 0);
+	fprintf(Exc_C, "\nIntegral of cos(x)^2*sin(y)^2 from [0,0] to [2pi,2pi] = %g\n", integ);
+	fprintf(Exc_C, "Analytical result = pi^2 = 9.869604401\n");
+	fprintf(Exc_C, "acc = %g\n eps = %g\n", acc, eps);
+	}
+
 	fclose(Exc_A);
 	fclose(Exc_B);
 	fclose(err);
+	fclose(Exc_C);
 	return 0;
 	
 	}
