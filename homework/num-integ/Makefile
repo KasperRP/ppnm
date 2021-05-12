@@ -4,10 +4,10 @@ CFLAGS += $(shell gsl-config --cflags)
 LDLIBS += $(shell gsl-config --libs)
 
 .PHONEY: default
-default: out.txt
+default: Exc_AB.txt
 
 
-out.txt: main
+Exc_AB.txt: main
 	./$< > $@
 
 main: main.o integrator.o

@@ -2,26 +2,24 @@ Integral of sqrt(x) from 0 to 1
 Analytical result = 2/3 
 My numerical estimate = 0.666954
 Number of calls = 16
-My estimated error = 0.00166695
-Actual error = 0.666954
+acc = 0.001
+eps = 0.001
 GSL value = 0.666667
 GSL number of calls = 105
-GSL error =0.000619
 
 Integral of 4*sqrt(1-x^2) from 0 to 1
 Analytical result = pi = 3.1415926535897932384626433 
 My numerical estimate = 3.141834578027267621536112
 Number of calls = 28
-My estimated error = 0.00414183
-Actual error = 0.000241924
+acc = 0.001
+eps = 0.001
 GSL value = 3.1415938509614806939396203
 GSL number of calls = 147
-GSL error = 0.001264
 Using Clenshaw-Curtis:
 My numerical estimate = 3.141576386483499572221945
 Number of calls = 44
-My estimated error = 0.00414158
-Actual error = 1.62671e-05
+acc = 0.001
+eps = 0.001
 
 We see that the Clenshaw-Curtis transform makes the result a little better than the adaptive routine, but not better than GSL
 
@@ -29,31 +27,29 @@ Integral of 1/sqrt(x) from 0 to 1
 Analytical result = 2 
 My numerical estimate = 1.99996
 Number of calls = 8572
-My estimated error = 0.00299996
-Actual error = 3.84999e-05
+acc = 0.001
+eps = 0.001
 GSL value = 2.000000
 GSL number of calls = 231
-GSL error = 0.000000
 Using Clenshaw-Curtis:
 My numerical estimate = 1.99999
 Number of calls = 16
-My estimated error = 0.00299999
-Actual error = 7.98954e-06
+acc = 0.001
+eps = 0.001
 
 Integral of ln(x)/sqrt(x) from 0 to 1
 Analtical result = -4 
 My numerical estimate = -3.99992
 Number of calls = 8604
-My estimated error = 0.00499992
-Actual error = 8.2941e-05
+acc = 0.001
+eps  = 0.001
 GSL value = -4.000000
 GSL number of calls = 315
-GSL error = 0.000000
 Using Clenshaw-Curtis:
 My numerical estimate =-3.99987
 Number of calls = 96
-My estimated error = 0.00499987
-Actual error = 0.000126144
+acc = 0.001
+eps = 0.001
 
 For the two latter integrals with singular integrands it is clear by the number of counts
- how much more efficient the Clenshaw-Curtis transform makes the calculation.
+how much more efficient the Clenshaw-Curtis transform makes the calculation.

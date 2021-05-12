@@ -1,0 +1,7 @@
+set term png
+set width 8
+set xlabel "r"
+set ylabel "$\psi_r$"
+set title "Radial hydrogen l=0 soultion"
+set output "hydrogen.png"
+plot "hydrogen.txt" using 1:2 with line linetype 5 color red title "Solution"

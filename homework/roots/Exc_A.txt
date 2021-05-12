@@ -1,0 +1,6 @@
+We estimate the extremum of the Rosenbrock valley function
+We start searching at (x,y) = (-2, 8)
+The function is called 2233 times
+Found extremum of Rosenbrock's valley function:
+0.999999
+0.999998
