@@ -2,13 +2,14 @@
 #include<math.h>
 #include<stdlib.h>
 
+
 void rkstep23(
-	void f(int n, double x, double* y, double* dydx),
+	void f(int n, double x, double* y, double* dydx), 
 	int n,
 	double x,
 	double* yx,
 	double h,
-	double* yh,
+	double* yh, 
 	double* dy) {
 
 	double k1[n], k2[n], k3[n], k4[n];
@@ -20,7 +21,7 @@ void rkstep23(
 	f(n, x+1./2*h, yt, k2);
 	for(int i=0; i<n; i++) {yt[i]=yx[i]+3./4*k2[i]*h;}
 
-	f(n, x+3./4*h, yt, k3);
+	f(n,x+3./4*h, yt, k3);
 	for(int i=0; i<n; i++) {yh[i]=yx[i]+(2./9*k1[i]+1./3*k2[i]+4./9*k3[i])*h;}
 
 	f(n, x+h, yh, k4);
@@ -43,6 +44,7 @@ void driver(
 		char* path
 	   )
 {
+
 	FILE* list = fopen(path, "w");
 	double x;
 	double y[n];
@@ -92,8 +94,8 @@ void driver(
 	else h*=2;
 	}
 
+
 	fclose(list);
 }
 
-	
 

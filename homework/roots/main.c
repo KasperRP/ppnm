@@ -69,10 +69,12 @@ void Rosenbrock_grad(gsl_vector* r, gsl_vector* Rr){
 // Schrödinger ODE to be solved (B)
 double e; // energy
 void schroedinger(int n, double x, double* y, double* dydx){
-	//dydx[0]=y[1];
-	//dydx[1]=-2*e*y[0]+1.0/x*y[0];
 	dydx[0]=y[1];
-	dydx[1]=-y[0];
+	dydx[1]=-2*e*y[0]+1.0/x*y[0];
+
+
+	//dydx[0]=y[1];
+	//dydx[1]=-y[0];
 }
 
 // Function giving M(e)=F_e(rmax) (B)
@@ -80,13 +82,15 @@ double rmax;
 char* path;
 
 void hydrogen(gsl_vector* x, gsl_vector* M){
-	//ncalls++;
+	ncalls++;
 	e = gsl_vector_get(x,0); // e is the variable of M
 	int n = 2; // it's a second order ODE
-	//double a = 1e-6; // we avoid dividing by zero
-	//double b = rmax;
-	double a=0;
-	double b=rmax;
+	double a = 1e-3; // we avoid dividing by zero
+	double b = rmax;
+
+	//double a=0;
+	//double b=rmax;
+	
 	double ya[n];
 	double yb[n];
 	double h = 0.001;
@@ -94,11 +98,12 @@ void hydrogen(gsl_vector* x, gsl_vector* M){
 	double eps = 1e-4;
 
 	// initial values - comes from f=r-r^2 and dfdr = 1-2r for small r
-	//ya[0]=a-a*a;
-	//ya[1]=1-2*a;
+	ya[0]=a-a*a;
+	ya[1]=1-2*a;
 	
-	ya[0]=0;
-	ya[1]=-1;
+
+	//ya[0]=0;
+	//ya[1]=-1;
 
 	driver(&schroedinger, n, a, ya, b, yb, h, acc, eps, path);
 	gsl_vector_set(M,0,yb[0]); // we find M as the solution evaluated at the endpoint.
@@ -133,15 +138,17 @@ int main(){
 	}
 
 	{ // Part B
-	//rmax = 8;
-	rmax=2*M_PI;
+	rmax = 8;
+
+	//rmax=2*M_PI;
+	
 	path = "hydrogen.txt";
 
-	//FILE* Exc_B = fopen("Exc_B.txt", "w");
+	FILE* Exc_B = fopen("Exc_B.txt", "w");
 	
 	// We now have the solution F to 
 	
-	//fclose(Exc_B);
+	fclose(Exc_B);
 	}
 
 	return 0;
