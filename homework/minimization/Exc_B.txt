@@ -1,0 +1,5 @@
+Higgs Boson: 
+Tolerance = 0.001
+Initial guess: (m, Gamma, A) = (125,1,1)
+Estimate values: (m, Gamma, A) =(125.972,-2.08626,9.87587)
+Number of steps: 26

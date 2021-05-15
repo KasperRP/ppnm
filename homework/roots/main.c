@@ -14,7 +14,7 @@ void rkstep23(
 		double* yx,
 		double h,
 		double* yh,
-		double dy);
+		double* dy);
 
 void driver(
 		void f(int n, double x, double* y, double* dydx),

@@ -1,0 +1,13 @@
+Rosenbrock's valley function:
+Tolerance = 0.0001
+Initial guess: (-2 ,8)
+Found minimum: (0.999996,0.999991)
+Value at min: 1.92998e-11
+Number of steps : 52
+
+Himmelblau's function: 
+Tolerance = 1e-05
+Initial guess: (4,2)
+Found minimum: (3,2)
+Value at min: 1.86313e-14
+Number of steps: 10
