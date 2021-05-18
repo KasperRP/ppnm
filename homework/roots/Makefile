@@ -12,8 +12,10 @@ Exc_A.txt: main
 hydrogen.png: hydrogen.pgi hydrogen.txt
 	pyxplot $<
 
-hydrogen.txt: main
+hydrogen.txt: main #hydrogen
 	./$< > $@
+
+#hydrogen.c: rungekutta.c
 
 main: main.o newton.o linear.o rungekutta.o
 

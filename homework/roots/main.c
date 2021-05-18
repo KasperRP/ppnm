@@ -1,5 +1,7 @@
 #include<stdio.h>
 #include<math.h>
+#include<stdlib.h>
+#include<float.h>
 #include<gsl/gsl_vector.h>
 #include<gsl/gsl_matrix.h>
 #include<gsl/gsl_blas.h>
@@ -7,14 +9,14 @@
 void GS_decomp(gsl_matrix* A, gsl_matrix* R);
 void GS_solve(gsl_matrix* Q, gsl_matrix* R, gsl_vector* b, gsl_vector* x);
 
-void rkstep23(
-		void f(int n, double x, double* y, double* dydx),
-		int n, 
-		double x,
-		double* yx,
-		double h,
-		double* yh,
-		double* dy);
+//void rkstep23(
+//		void f(int n, double x, double* y, double* dydx),
+//		int n, 
+//		double x,
+//		double* yx,
+//		double h,
+//		double* yh,
+//		double* dy);
 
 void driver(
 		void f(int n, double x, double* y, double* dydx),
@@ -68,9 +70,9 @@ void Rosenbrock_grad(gsl_vector* r, gsl_vector* Rr){
 
 // Schrödinger ODE to be solved (B)
 double e; // energy
-void schroedinger(int n, double x, double* y, double* dydx){
+void schroedinger(int n, double x, double* y, double* dydx) {
 	dydx[0]=y[1];
-	dydx[1]=-2*e*y[0]+1.0/x*y[0];
+	dydx[1]=-2.0*e*y[0]+1.0/x*y[0];
 
 
 	//dydx[0]=y[1];
@@ -78,10 +80,11 @@ void schroedinger(int n, double x, double* y, double* dydx){
 }
 
 // Function giving M(e)=F_e(rmax) (B)
+
 double rmax;
 char* path;
 
-void hydrogen(gsl_vector* x, gsl_vector* M){
+void solver(gsl_vector* x, gsl_vector* M){
 	ncalls++;
 	e = gsl_vector_get(x,0); // e is the variable of M
 	int n = 2; // it's a second order ODE
@@ -98,8 +101,8 @@ void hydrogen(gsl_vector* x, gsl_vector* M){
 	double eps = 1e-4;
 
 	// initial values - comes from f=r-r^2 and dfdr = 1-2r for small r
-	ya[0]=a-a*a;
-	ya[1]=1-2*a;
+	ya[0]=0;
+	ya[1]=1;
 	
 
 	//ya[0]=0;
@@ -127,7 +130,7 @@ int main(){
 	
        ncalls = 0;
        newton(Rosenbrock_grad, r, eps);
-       fprintf(Exc_A, "We start searching at (x,y) = (%g, %g)\n", x0, y0);
+       fprintf(Exc_A, "We start searching at (x,y) = (%g,%g)\n", x0, y0);
        fprintf(Exc_A, "The function is called %i times\n", ncalls);
        fprintf(Exc_A, "Found extremum of Rosenbrock's valley function:\n");
        for(int i=0; i<n; i++){
@@ -138,19 +141,29 @@ int main(){
 	}
 
 	{ // Part B
+	FILE* Exc_B = fopen("Exc_B.txt", "w");
+	path = "hydrogen.txt";
 	rmax = 8;
+	//double eps = 0.01;
+	//int n = 1;
+	//gsl_vector* x = gsl_vector_alloc(n);
+	//double x0 = -1;
+	//gsl_vector_set(x,0,x0);
+	//ncalls =0;
+	//newton(solver, x, eps);
 
+	//fprintf(Exc_B, "Lowest root of M(e)=0:");
+	//fprintf(Exc_B, "Chosen rmax = %g\n", rmax);
+	//fprintf(Exc_B, "We start searching at %g\n", x0);
+	//fprintf(Exc_B, "Lowest found root = %g\n", gsl_vector_get(x,0));
+	
 	//rmax=2*M_PI;
 	
-	path = "hydrogen.txt";
-
-	FILE* Exc_B = fopen("Exc_B.txt", "w");
-	
-	// We now have the solution F to 
-	
 	fclose(Exc_B);
+	
+	//gsl_vector_free(x);
+	
 	}
-
 	return 0;
       
 	}
