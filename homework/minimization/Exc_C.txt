@@ -1,0 +1,8 @@
+Rosenbrock's valley function: 
+Simplex size goal = 0.0001
+Found minimum at (0.999952, 0.99991)
+Number of steps : 241
+Himmelblau function: 
+Simplex size goal = 0.0001
+Found minimum at (2.99999,1.99996)
+Number of steps: 115

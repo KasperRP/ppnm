@@ -8,16 +8,25 @@
 void gradient(double F(gsl_vector*), gsl_vector* x, gsl_vector* grad);
 int qnewton(double F(gsl_vector*), gsl_vector* x, double acc);
 
+int amoeba(int dim, double f(double*), double** simplex, double simplex_size_goal); // For part C
+
 double Rosenbrock(gsl_vector* r){  // (A)
 	double x = gsl_vector_get(r,0);
 	double y = gsl_vector_get(r,1);
 	return (1-x)*(1-x)+100*(y-x*x)*(y-x*x);
+}
+double RosenbrockC(double* r){ // (C) (No use of GSL vectors)
+	return (1-r[0])*(1-r[0])+100*(r[1]-r[0]*r[0])*(r[1]-r[0]*r[0]);
 }
 
 double Himmelblau(gsl_vector* r){ // (A)
 	double x = gsl_vector_get(r,0);
 	double y = gsl_vector_get(r,1);
 	return (x*x+y-11)*(x*x+y-11)+(x+y*y-7)*(x+y*y-7);
+}
+
+double HimmelblauC(double* r){
+	return (r[0]*r[0]+r[1]-11)*(r[0]*r[0]+r[1]-11)+(r[0]+r[1]*r[1]-7)*(r[0]+r[1]*r[1]-7);
 }
 
 // Breit-Wigner function(B)
@@ -132,6 +141,46 @@ int main(){
 	gsl_vector_free(param);
 	}
 
+	{// Part C
+	FILE* Exc_C = fopen("Exc_C.txt", "w");
+	//Minimum of Rosenbrock's valley function
+	int dim = 2;
+	double* simplex[] = { // initial value of simplex. How hard it is for convergence depends on this value
+
+	(double[]) {1.0, 2.0},
+	(double[]) {0.0, 2.0},
+	(double[]) {8.0, 0.0}
+	};
+	double size_goal = 1e-4;
+	//int hi = 0;
+	int lo = 0;
+
+	int steps = amoeba(dim, RosenbrockC, simplex, size_goal);
+	fprintf(Exc_C, "Rosenbrock's valley function: \n");
+	fprintf(Exc_C, "Simplex size goal = %g\n", size_goal);
+	fprintf(Exc_C, "Found minimum at (%g, %g)\n", simplex[lo][0], simplex[lo][1]);
+	fprintf(Exc_C, "Number of steps : %i\n", steps);
+	
+	double* Simplex[] = {
+	
+	(double[]) {1.0, 2.0},
+	(double []) {0.0, 2.0},
+	(double []) {8.0, 0.0}
+	};
+	
+	
+
+	int stepss = amoeba(dim, HimmelblauC, Simplex, size_goal);
+	fprintf(Exc_C, "Himmelblau function: \n");
+	fprintf(Exc_C, "Simplex size goal = %g\n", size_goal);
+	fprintf(Exc_C, "Found minimum at (%g,%g)\n", Simplex[lo][0], Simplex[lo][1]);
+	fprintf(Exc_C, "Number of steps: %i\n", stepss);
+
+	fclose(Exc_C);
+	}
+		
+
+	
 
 
 	return 0;
