@@ -9,21 +9,13 @@
 void GS_decomp(gsl_matrix* A, gsl_matrix* R);
 void GS_solve(gsl_matrix* Q, gsl_matrix* R, gsl_vector* b, gsl_vector* x);
 
-//void rkstep23(
-//		void f(int n, double x, double* y, double* dydx),
-//		int n, 
-//		double x,
-//		double* yx,
-//		double h,
-//		double* yh,
-//		double* dy);
-
 void driver(
 		void f(int n, double x, double* y, double* dydx),
 		int n,
 		double a,
 		double* ya,
 		double b,
+		//double* y,
 		double* yb,
 		double h,
 		double acc,
@@ -72,7 +64,7 @@ void Rosenbrock_grad(gsl_vector* r, gsl_vector* Rr){
 double e; // energy
 void schroedinger(int n, double x, double* y, double* dydx) {
 	dydx[0]=y[1];
-	dydx[1]=-2.0*e*y[0]+1.0/x*y[0];
+	dydx[1]=-2*e*y[0]+1.0/x*y[0];
 
 
 	//dydx[0]=y[1];
@@ -81,7 +73,7 @@ void schroedinger(int n, double x, double* y, double* dydx) {
 
 // Function giving M(e)=F_e(rmax) (B)
 
-double rmax;
+double rmax=8;
 char* path;
 
 void solver(gsl_vector* x, gsl_vector* M){
@@ -96,19 +88,23 @@ void solver(gsl_vector* x, gsl_vector* M){
 	
 	double ya[n];
 	double yb[n];
+	//double y[n];
+	//y[0]=a-a*a;
+	//y[1]=1-2*a;
 	double h = 0.001;
 	double acc = 1e-4;
 	double eps = 1e-4;
 
 	// initial values - comes from f=r-r^2 and dfdr = 1-2r for small r
-	ya[0]=0;
-	ya[1]=1;
+	ya[0]=a-a*a;
+	ya[1]=1-2*a;
 	
 
 	//ya[0]=0;
 	//ya[1]=-1;
 
-	driver(&schroedinger, n, a, ya, b, yb, h, acc, eps, path);
+	driver(schroedinger, n, a, ya, b, yb, h, acc, eps, path);
+
 	gsl_vector_set(M,0,yb[0]); // we find M as the solution evaluated at the endpoint.
 	// Note that we only need the first component since we are not interested in the 
 	// derivative of M.
@@ -121,8 +117,8 @@ int main(){
 	FILE* Exc_A = fopen("Exc_A.txt", "w");
 	fprintf(Exc_A, "We estimate the extremum of the Rosenbrock valley function\n");
 	double eps = 0.01;
-	int n = 2;
-	gsl_vector* r = gsl_vector_alloc(n);
+	int d = 2;
+	gsl_vector* r = gsl_vector_alloc(d);
 	double x0 = -2;
 	double y0 = 8; // initial guess for roots
 	gsl_vector_set(r,0, x0);
@@ -133,7 +129,7 @@ int main(){
        fprintf(Exc_A, "We start searching at (x,y) = (%g,%g)\n", x0, y0);
        fprintf(Exc_A, "The function is called %i times\n", ncalls);
        fprintf(Exc_A, "Found extremum of Rosenbrock's valley function:\n");
-       for(int i=0; i<n; i++){
+       for(int i=0; i<d; i++){
 	       fprintf(Exc_A, "%g\n", gsl_vector_get(r,i));
        }
        fclose(Exc_A);
@@ -143,25 +139,25 @@ int main(){
 	{ // Part B
 	FILE* Exc_B = fopen("Exc_B.txt", "w");
 	path = "hydrogen.txt";
-	rmax = 8;
-	//double eps = 0.01;
-	//int n = 1;
-	//gsl_vector* x = gsl_vector_alloc(n);
-	//double x0 = -1;
-	//gsl_vector_set(x,0,x0);
-	//ncalls =0;
-	//newton(solver, x, eps);
+	//rmax = 8;
+	double eps = 0.01;
+	int d = 1;
+	gsl_vector* x = gsl_vector_alloc(d);
+	double x0 = -2;
+	gsl_vector_set(x,0,x0);
+	ncalls =0;
+	newton(solver, x, eps);
 
-	//fprintf(Exc_B, "Lowest root of M(e)=0:");
-	//fprintf(Exc_B, "Chosen rmax = %g\n", rmax);
-	//fprintf(Exc_B, "We start searching at %g\n", x0);
-	//fprintf(Exc_B, "Lowest found root = %g\n", gsl_vector_get(x,0));
+	fprintf(Exc_B, "Lowest root of M(e)=0:\n");
+	fprintf(Exc_B, "Chosen rmax = %g\n", rmax);
+	fprintf(Exc_B, "We start searching at %g\n", x0);
+	fprintf(Exc_B, "Lowest found root = %g\n", gsl_vector_get(x,0));
 	
 	//rmax=2*M_PI;
 	
 	fclose(Exc_B);
 	
-	//gsl_vector_free(x);
+	gsl_vector_free(x);
 	
 	}
 	return 0;

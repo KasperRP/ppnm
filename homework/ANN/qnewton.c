@@ -1,98 +1,89 @@
 #include<stdio.h>
 #include<math.h>
-#include<gsl/gsl_vector.h>
-#include<gsl/gsl_matrix.h>
-#include<gsl/gsl_blas.h>
 #include<float.h>
 static const double h = sqrt(DBL_EPSILON);
+#define For(i) for(int i=0; i<d; i++)
+#define ID_set(B) For(i) For(j) B[i][j]=0; For(i) B[i][i]=1;
+
+double norm(int d, double* x){
+	double sum = 0;
+	For(i){
+		sum += x[i]*x[i];
+	}
+	return sqrt(sum);
+}
 
 void gradient(
-		double F(gsl_vector*),
-		gsl_vector* x,
-		gsl_vector* grad){
-	double m = x -> size;
-	for(int i=0; i<m; i++){
-		double fx = F(x);
+	int d,
+	double f(int d, double* x),
+	double* x,
+	double* grad){
+
+	For(i){
+		double fx = f(d,x);
 		double dx;
-		double xi = gsl_vector_get(x,i);
-		if(fabs(xi)<h) dx=h;
-		else dx=fabs(xi)*h;
-		gsl_vector_set(x,i,xi+dx);
-		gsl_vector_set(grad,i,(F(x)-fx)/dx);
-		gsl_vector_set(x,i,xi);
+		double xi = x[i];
+		if(fabs(xi)<h) dx = h;
+		else dx = fabs(xi)*h;
+		x[i]+=dx;
+		grad[i]=(f(d,x)-fx)/dx;
+		x[i]=xi;
 	}
 }
 
-int qnewton(double F(gsl_vector*), gsl_vector* x, double acc) {
-	int n = x->size;
-	int nsteps =0;
-
-	gsl_matrix* B = gsl_matrix_alloc(n,n);
-	gsl_vector* gradF = gsl_vector_alloc(n);
-	gsl_vector* Dx = gsl_vector_alloc(n);
-	gsl_vector* z = gsl_vector_alloc(n);
-	gsl_vector* u = gsl_vector_alloc(n);
-	gsl_vector* gradFz = gsl_vector_alloc(n);
-	gsl_vector* y = gsl_vector_alloc(n);
-
-	gsl_matrix_set_identity(B);
-	gradient(F,x,gradF);
-	double fx = F(x);
+int qnewton(int d, double f(int, double*), double* x, double acc){
+	int nsteps = 0;
+	double B[d][d]; // inverse Hessian
+	ID_set(B); // start with B being the identity
+	double gradf[d];
+	gradient(d, f, x, gradf); // gradient stored in gradf
+	double fx = f(d,x);
+	double fz;
 
 	double maxnsteps = 10000;
 
 	while(1){
-
-		nsteps ++;
+		nsteps++;
 		if(nsteps>maxnsteps) break;
+		double normgradf = norm(d,gradf);
+		if(normgradf<acc) break;
 
-		if(gsl_blas_dnrm2(gradF)<acc) break;
+		double Dx[d]; // Newtons step
+		For(i){ Dx[i]=0; For(j) Dx[i]-=B[i][j]*gradf[j];}
+		double normx = norm(d,x);
+		double normDx = norm(d,Dx);
+		if(normDx<h*normx) break;
 
-		gsl_blas_dgemv(CblasNoTransm -1, B, gradF, 0, Dx);
+		// Start back tracking line search
 
-		if(gsl_blas_dnrm2(Dx)<h*gsl_blas_dnrm2(x)) break;
-
-		
 		double lambda = 1;
+		double z[d];
 		while(1){
-			gsl_vector_memcpy(z,x);
-			gsl_vector_add(z,Dx);
-			double fz = F(z);
-			double DxTG;
-			gsl_blas_ddot(Dx, gradF, &DxTG);
+			For(i) z[i]=x[i]+Dx[i];
+			fz = f(d,z);
+			double DxTG = 0; For(i) DxTG += Dx[i]*gradf[i]; // dot product
 			double alpha = 0.01;
 			if(fz<fx+alpha*DxTG) break;
-			if(lambda<h){
-				gsl_matrix_set_identity(B);
-				break;
-			}
+
+			if(lambda<h){ID_set(B); break;}
 			lambda*=0.5;
-			gsl_vector_scale(Dx,0.5);
+			For(i) Dx[i]*=0.5;
 		}
-
-		gradient(F,z,gradFz);
-		gsl_vector_memcpy(y,gradFz);
-		gsl_blas_daxpy(-1, gradF, y);
-		gsl_vector_memcpy(u,Dx);
-		gsl_blas_dgemv(CblasNoTrans, -1, B, y, 1, u);
-		double uTy;
-		gsl_blas_ddot(u,y,&uTy);
-		if(fabs(uTy)>1e-12) {
-			gsl_blas_dger(1.0/uTy,u,u,B);
+		
+		double gradfz[d];
+		gradient(d,f,z,gradfz);
+		double y[d];
+		For(i) y[i]=gradfz[i]-gradf[i]; // y = gradf(x+Dx)-gradf(x)
+		double u[d];
+		For(i){u[i]=Dx[i]; For(j) u[i]-=B[i][j]*y[j];} // u=Dx-B*y
+		double uTy=0; For(i) uTy += u[i]*y[i];
+		if(fabs(uTy)>1e-12){
+			For(i)For(j) B[i][j] += u[i]*u[j]/uTy;
 		}
-
-		gsl_vector_memcpy(x,z);
-		gsl_vector_memcpy(gradF,gradFz);
-		fx=F(x);}
-
-		gsl_matrix_free(B);
-		gsl_vector_free(gradF);
-		gsl_vector_free(Dx);
-		gsl_vector_free(z);
-		gsl_vector_free(u);
-		gsl_vector_free(gradFz);
-		gsl_vector_free(y);
-
-		return nsteps;
+		For(i) x[i]=z[i];
+		For(i) gradf[i]=gradfz[i];
+		fx=fz;
+	}
+	return nsteps;
 }
 

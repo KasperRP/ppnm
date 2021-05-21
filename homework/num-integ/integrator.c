@@ -123,6 +123,8 @@ double CCintegrate( // Clenshaw-Curtis integral
 //	return integrate(F, 0, M_PI, acc, eps);
 //}
 
+
+/*
 double doubleinfquad(
 		double f(double x),
 		double a,
@@ -204,7 +206,6 @@ double lowerinfquad(
 	}
 }
 
-
 double infintegrate(
 		double f(double),
 		double a,
@@ -244,5 +245,6 @@ double infintegrate(
 		return lowerinfquad(f, xmin, xmax, acc, eps, f2, f3, nrec, error);
 	}
 }
+*/
 
 

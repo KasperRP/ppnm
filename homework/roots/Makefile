@@ -3,8 +3,8 @@ CFLAGS += $(shell gsl-config --cflags)
 LDLIBS = $(shell gsl-config --libs)
 
 .PHONEY: default
-default: Exc_A.txt hydrogen.png
-	cat Exc_A.txt
+default: Exc_A.txt hydrogen.png Exc_B.txt
+	
 
 Exc_A.txt: main
 	./$< > $@
@@ -22,6 +22,6 @@ main: main.o newton.o linear.o rungekutta.o
 
 .PHONEY: clean
 clean:
-	$(RM) main *.o *.txt *.pgi *.png
+	$(RM) main *.o *.txt  *.png
 
 

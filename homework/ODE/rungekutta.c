@@ -28,7 +28,7 @@ void rkstep23(
 	f(n, x+h, yh, k4);
 	for(int i=0; i<n; i++){
 		yt[i]=yx[i]+(7./24*k1[i]+1./4*k2[i]+1./3*k3[i]+1./8*k4[i])*h;
-		dy[i]=yt[i]-yh[i];
+		dy[i]=yh[i]-yt[i];
 	}
 }
 
@@ -41,6 +41,7 @@ void driver(
 		double a,
 		double* ya,
 		double b,
+		//double* y, // y starts as y(a) and ends as y(b)
 		double* yb,
 		double h, 
 		double acc,
@@ -105,7 +106,10 @@ void driver(
 	if(err>0) h*=pow(tol/err, 0.25)*0.95;
 	else h*=2;
 	}  // end of while loop
-
+	
+	for(int i=0; i<n; i++){
+		yb[i]=yh[i];
+	}
 	
 
 	fclose(list);

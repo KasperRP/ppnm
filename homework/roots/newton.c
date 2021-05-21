@@ -53,7 +53,6 @@ double lambda = 1.0; // initial value
 while(lambda>1./64){
 gsl_vector_memcpy(z,x); // copy of x
 gsl_vector_add(z,Dx); // z=x+Dx
-
 f(z, fz); // f(x+Dx)
 if( norm(fz)<(1-lambda/2)*norm(fx)) break;
 lambda*=0.5;

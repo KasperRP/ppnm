@@ -18,7 +18,8 @@ void driver(
 		int n,
 		double a, // first point in interval
 		double* ya, // y(a)
-		double b, // end point
+		double b,	// end point
+		//double* y,
 		double* yb, // y(b) - to be calculated
 		double h, 
 		double acc,
@@ -109,8 +110,12 @@ int main(){
 	// initial values
 	ya[0]=0;
 	ya[1]=-1;
+	//double y[n];
+	//y[0]=0; // initial values
+	//y[1]=-1;
 
 	driver(&f, n, a, ya, b, yb, h, acc, eps, path);
+	//driver(f,n,a,b,y,h,acc,eps,path);
 	}
 
 
@@ -136,8 +141,13 @@ int main(){
 	ya[0]=N;
 	ya[1]=50;
 	ya[2]=0;
+	//double y[n];
+	//y[0]=N;
+	//y[1]=50;
+	//y[2]=0;
 
 	driver(&fSIR, n, a, ya, b, yb, h, acc, eps, path);
+	//driver(&fSIR, n, a, b, y, h, acc, eps, path);
 
 
 	path= "SIR2.txt";
@@ -148,8 +158,12 @@ int main(){
 	ya[0]=N;
 	ya[1]=50;
 	ya[2]=0;
+	//y[0]=N;
+	//y[1]=50;
+	//y[2]=0;
 
 	driver(&fSIR, n, a, ya, b, yb, h, acc, eps, path);
+	//driver(&fSIR, n, a, b, y, h, acc, eps, path);
 
 	path= "SIR3.txt";
 	N=6e6;
@@ -159,8 +173,12 @@ int main(){
 	ya[0]=N;
 	ya[1]=50;
 	ya[2]=0;
+	//y[0]=N;
+	//y[1]=50;
+	//y[2]=0;
 
 	driver(&fSIR, n, a, ya, b, yb, h, acc, eps, path);
+	//driver(&fSIR, n, a, b, y, h, acc, eps, path);
 
 	FILE* comment_file = fopen("Comments_SIR.txt", "w");
 	fprintf(comment_file, "An increasing contact time $T_c$ gives rise to the solutions being\nshifted along the time axis.\nAlso, the maximum infectious number decreases for increasing $T_c$, which makes sense.");	
@@ -180,6 +198,7 @@ int main(){
 	char* path = "GRAV.txt";
 
 	G=1; M1=1; M2=1; M3=1;
+	//double y[n];
 	// Initial values
 	ya[0]=-0.97000436; ya[1]=0.24308753; // x1 y1
 	ya[2]=0; ya[3]=0; // x2 y2
@@ -189,6 +208,7 @@ int main(){
 	ya[10]=0.4662036850; ya[11]=0.4323657300; // vx3 vy3
 
 	driver(&fGRAV, n, a, ya, b, yb, h, acc, eps, path);
+	//driver(&fGRAV, n, a, b, y, h, acc, eps, path);
 
 
 	}

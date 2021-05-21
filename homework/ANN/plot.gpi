@@ -1,0 +1,13 @@
+set term png
+set width 8
+set xlabel "$x$"
+set ylabel "$y$"
+set title "Interpolation of $\sin(x)\cdot\exp(-x)$, its derivative and antiderivative"
+set output "plot.png"
+set yrange[-1:1.5]
+plot "points.txt" using 1:2 with points pointtype 15 color black notitle\
+, "points.txt" using 1:3 with points pointtype 15 color black notitle\
+, "points.txt" using 1:4 with points pointtype 15 color black notitle\
+, "functions.txt" using 1:2 with line linetype 1 color red title "Tabulated function"\
+, "functions.txt" using 1:3 with line linetype 1 color blue title "Derivative"\
+, "functions.txt" using 1:4 with line linetype 1 color green title "Antiderivative"
