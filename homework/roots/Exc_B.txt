@@ -1,4 +1,6 @@
 Lowest root of M(e)=0:
 Chosen rmax = 8
 We start searching at -2
-Lowest found root = 0.210798
+Lowest found root = -0.500028
+Exact result : -1/2
+Exact result : -1/2

@@ -64,8 +64,7 @@ void Rosenbrock_grad(gsl_vector* r, gsl_vector* Rr){
 double e; // energy
 void schroedinger(int n, double x, double* y, double* dydx) {
 	dydx[0]=y[1];
-	dydx[1]=-2*e*y[0]+1.0/x*y[0];
-
+	dydx[1]=-2*e*y[0]-2.0/x*y[0];
 
 	//dydx[0]=y[1];
 	//dydx[1]=-y[0];
@@ -152,6 +151,8 @@ int main(){
 	fprintf(Exc_B, "Chosen rmax = %g\n", rmax);
 	fprintf(Exc_B, "We start searching at %g\n", x0);
 	fprintf(Exc_B, "Lowest found root = %g\n", gsl_vector_get(x,0));
+	fprintf(Exc_B, "Exact result : -1/2\n");
+	fprintf(Exc_B, "Exact result : -1/2\n");
 	
 	//rmax=2*M_PI;
 	
