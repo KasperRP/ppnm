@@ -3,4 +3,3 @@ Chosen rmax = 8
 We start searching at -2
 Lowest found root = -0.500028
 Exact result : -1/2
-Exact result : -1/2

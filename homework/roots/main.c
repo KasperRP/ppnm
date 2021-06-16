@@ -152,7 +152,6 @@ int main(){
 	fprintf(Exc_B, "We start searching at %g\n", x0);
 	fprintf(Exc_B, "Lowest found root = %g\n", gsl_vector_get(x,0));
 	fprintf(Exc_B, "Exact result : -1/2\n");
-	fprintf(Exc_B, "Exact result : -1/2\n");
 	
 	//rmax=2*M_PI;
 	
