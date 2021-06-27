@@ -25,4 +25,4 @@ main: main.o montecarlo.o
 
 .PHONEY: clean
 clean:
-	$(RM) main *.o *.txt *.pgi *.png
+	$(RM) main *.o *.txt *.png

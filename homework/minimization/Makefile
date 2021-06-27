@@ -23,4 +23,4 @@ main: main.o qnewton.o simplex.o
 .PHONEY: clean
 
 clean:
-	$(RM) main *.o *.txt *.pgi *.png
+	$(RM) main *.o *.txt *.png

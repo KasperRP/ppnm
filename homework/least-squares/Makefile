@@ -18,3 +18,7 @@ main.o: main.c
 main.c: lsfit.c
 
 lsfit.c: gs.c
+
+.PHONEY: clean
+clean:
+	$(RM) main *.o *.txt *.png

@@ -40,4 +40,8 @@ cinterp: cinterp.o binsearch.o
 cinterp.o: cinterp.c
 cinterp.c: binsearch.h binsearch.c
 
+.PHONEY: clean
+clean:
+	$(RM) linterp qinterp cinterp *.o *.txt *.png
+
 

@@ -14,4 +14,4 @@ main: main.o integrator.o
 
 .PHONEY: clean
 clean:
-	$(RM) out* main *.o *.png 
+	$(RM) main *.o *.txt 

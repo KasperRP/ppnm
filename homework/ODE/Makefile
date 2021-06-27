@@ -39,3 +39,7 @@ GRAV.txt: main
 	./$< > $@
 
 main: main.o rungekutta.o
+
+.PHONEY: clean
+clean:
+	$(RM) main *.o *.txt *.png

@@ -28,3 +28,7 @@ main: main.o jacobi.o
 main.o: main.c
 
 main.c: jacobi.c
+
+.PHONEY: clean
+clean:
+	$(RM) main *.o *.txt *.png
