@@ -5,10 +5,10 @@ LDLIBS = $(shell gsl-config --libs)
 .PHONEY: default
 default: jacobi_diag_test.txt quantum_eigVal.txt quantum_plot.png timeplot.png
 	
-quantum_plot.png: quantum_plot.pgi quantum_eigfunc.txt
+quantum_plot.png: quantum_plot.gpi quantum_eigfunc.txt
 	pyxplot $<
 
-timeplot.png: timeplot.pgi diag_time.txt
+timeplot.png: timeplot.gpi diag_time.txt
 	pyxplot $<
 
 jacobi_diag_test.txt: main

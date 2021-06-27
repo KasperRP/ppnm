@@ -5,7 +5,7 @@ LDLIBS = $(shell gsl-config --libs)
 .PHONEY: default
 default: plot.png  half_life_time.txt
 
-plot.png: plot.pgi data.txt
+plot.png: plot.gpi data.txt
 	pyxplot $<
 
 half_life_time.txt: main

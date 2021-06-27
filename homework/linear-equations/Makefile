@@ -14,7 +14,7 @@ GS_solve_test.txt: main
 GS_inverse_test.txt: main
 	./$< > $@
 
-timeplot.png: timeplot.pgi QR_time.txt
+timeplot.png: timeplot.gpi QR_time.txt
 	pyxplot $<
 
 QR_time.txt: main

@@ -36,7 +36,7 @@ The integral I is estimated by a weighted sum of the form
 	I \approx \sum_i w_iF(x_i),
 	\label{I app}
 \end{equation}
-where the function values $F(x_i)$ are given by the integral
+where the function values $F(x_i)$ are given by the integrals
 \begin{equation}
 	F(x_i) = \int_{d(x_i)}^{u(x_i)} {\mathrm d y} \: f(x_i, y),
 	\label{Fxi def}
@@ -46,7 +46,9 @@ and estimated as a weighted sum in a similar fashion
 	F(x_i) \approx \sum_j \omega_j f(x_i, y_j).
 	\label{Fxi app}
 \end{equation}
-Both Eq. (\ref{I app}) and (\ref{Fxi app}) are estimated using the one-dimensional recursive adaptive integrator from the coursework. 
+Eq. (\ref{Fxi app}) is estimated using the one-dimensional recursive adaptive integrator introduced in the coursework, along the y-direction. Here, I have used the same reusable points and weights as those given in the lecture notes. After having the estimation of the function $F(x)$ defined in Eq. (\ref{define F}), I estimate the final integral $I$ using the exact same one-dimensional adaptive integrator, now along the x-direction.\\ 
+As we apply the one-dimensional adaptive integrator consecutivey along the two directions, the strengths and weaknesses of the one-dimensional integrator are reflected in the two-dimensional integrator. This is most noticeable when singularities are present. In the algorithm, we determine the Riemann sum along both directions, and this can deal with singularities. However, it is not so effective and it takes time to reach convergence in this case. In the course, we have seen that performing a Clenshaw-Curtis transformation makes the integration algorithm converge faster when singularities are present. Therefore, for a more effective two-dimensional integrator, one could have included the Clenshaw-Curtis transformation in the one-dimensional integrator along the two directions. 
+
 
 
 

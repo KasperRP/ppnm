@@ -11,4 +11,3 @@ fit f(x) "QR_time.txt" using 1:2 via a ;\
 plot "QR_time.txt" using 1:2 with line linetype 5 color red title "$My\: GS\_decomp$" \
 , "QR_time.txt" using 1:3 with line linetype 5 color green title "$gsl\_linalg\_QR\_decomp$"\
 , f(x) with line title "$O(N^3)$"
-

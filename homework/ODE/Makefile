@@ -5,19 +5,19 @@ LDLIBS = $(shell gsl-config --libs)
 .PHONEY: default
 default: harmonic.png SIR1.png SIR2.png SIR3.png Comments_SIR.txt GRAV.png
 
-harmonic.png: harmonic.pgi harmonic.txt
+harmonic.png: harmonic.gpi harmonic.txt
 	pyxplot $<
 
-SIR1.png: SIR1.pgi SIR1.txt
+SIR1.png: SIR1.gpi SIR1.txt
 	pyxplot $<
 
-SIR2.png: SIR2.pgi SIR2.txt
+SIR2.png: SIR2.gpi SIR2.txt
 	pyxplot $<
 
-SIR3.png: SIR3.pgi SIR3.txt
+SIR3.png: SIR3.gpi SIR3.txt
 	pyxplot $<
 
-GRAV.png: GRAV.pgi GRAV.txt
+GRAV.png: GRAV.gpi GRAV.txt
 	pyxplot $<
 
 harmonic.txt: main

@@ -15,7 +15,7 @@ Exc_B.txt: main
 Exc_C.txt: main
 	./$< > $@
 
-err.png: err.pgi err.txt
+err.png: err.gpi err.txt
 	pyxplot $<
 
 err.txt: main

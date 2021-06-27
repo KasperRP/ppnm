@@ -15,7 +15,7 @@ out.data.txt: main
 
 main: main.o myex.o
 
-plot.pdf: plot.pgi out.data.txt
+plot.pdf: plot.gpi out.data.txt
 	pyxplot $<
 
 clean:

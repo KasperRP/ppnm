@@ -9,7 +9,7 @@ default: Exc_A.txt hydrogen.png Exc_B.txt
 Exc_A.txt: main
 	./$< > $@
 
-hydrogen.png: hydrogen.pgi hydrogen.txt
+hydrogen.png: hydrogen.gpi hydrogen.txt
 	pyxplot $<
 
 hydrogen.txt: main #hydrogen

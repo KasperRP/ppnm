@@ -6,4 +6,3 @@ set title "Solution to u''=-u"
 set output "harmonic.png"
 plot "harmonic.txt" using 1:2 with line linetype 1 color red title "Function"\
 , "harmonic.txt" using 1:3 with line linetype 1 color blue title "Derivative"\
-
