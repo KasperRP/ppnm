@@ -1,0 +1,53 @@
+\documentclass{article}
+\usepackage{fullpage}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{graphicx}
+\usepackage{listings}
+\title{A short note on 2D integrator implementation}
+\author{K. R. ~Pedersen, 201709218}
+\date{}
+\begin{document}
+\lstset{language=C}
+\maketitle
+
+\begin{abstract}
+In this note I shortly describe the ideas behind my two-dimensional integrator implementation.
+\end{abstract}
+
+\section{Introduction}
+The task is to numerically calculate two-dimensional integrals of the form
+\begin{equation}
+	I = \int_a^b {\mathrm d x} \int_{d(x)}^{u(x)} {\mathrm d y} \: f(x,y),
+	\label{integral}
+\end{equation}
+by consecutively applying an adaptive one-dimensional integrator along each of the two dimensions. Let
+\begin{equation}
+	F(x):= \int_{d(x)}^{u(x)} {\mathrm d y} \: f(x,y),
+	\label{define F}
+\end{equation}
+so that
+\begin{equation}
+	I=\int_a^b {\mathrm d x} \: F(x).
+	\label{I short}
+\end{equation}
+The integral I is estimated by a weighted sum of the form
+\begin{equation}
+	I \approx \sum_i w_iF(x_i),
+	\label{I app}
+\end{equation}
+where the function values $F(x_i)$ are given by the integral
+\begin{equation}
+	F(x_i) = \int_{d(x_i)}^{u(x_i)} {\mathrm d y} \: f(x_i, y),
+	\label{Fxi def}
+\end{equation}
+and estimated as a weighted sum in a similar fashion
+\begin{equation}
+	F(x_i) \approx \sum_j \omega_j f(x_i, y_j).
+	\label{Fxi app}
+\end{equation}
+Both Eq. (\ref{I app}) and (\ref{Fxi app}) are estimated using the one-dimensional recursive adaptive integrator from the coursework. 
+
+
+
+\end{document}
