@@ -19,4 +19,4 @@ main: main.o 2Dintegrator.o
 .PHONEY: clean
 
 clean:
-	$(RM) out* main *.o
+	$(RM) main *.o *.pdf *.log *.aux *.txt
